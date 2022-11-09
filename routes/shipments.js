@@ -1,6 +1,8 @@
 "use strict";
 
 const express = require("express");
+const jsonschema = require("jsonschema");
+const shipOrderSchema = require("../schemas/shipOrderSchema.json");
 const { BadRequestError } = require("../expressError");
 const router = new express.Router();
 
@@ -15,8 +17,11 @@ const { shipProduct } = require("../shipItApi");
  */
 
 router.post("/", async function (req, res, next) {
-  if (req.body === undefined) {
-    throw new BadRequestError();
+  const result = jsonschema.validate(
+    req?.body, shipOrderSchema, {required: true});
+  if (!result.valid) {
+    const errs = result.errors.map(err => err.stack);
+    throw new BadRequestError(errs);
   }
   const { productId, name, addr, zip } = req.body;
   const shipId = await shipProduct({ productId, name, addr, zip });
