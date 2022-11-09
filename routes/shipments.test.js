@@ -1,14 +1,14 @@
 "use strict";
 
-const func /* const { shipProduct }*/ = require('../shipItApi.js') //TODO: change constant name
-func.shipProduct = jest.fn();
+const shipAPI /* const { shipProduct }*/ = require('../shipItApi.js') //TODO: change constant name
+shipAPI.shipProduct = jest.fn();
 const request = require("supertest");
 const app = require("../app");
 
 
 describe("POST /", function () {
   test("valid", async function () {
-    func.shipProduct.mockReturnValue(1234);
+    shipAPI.shipProduct.mockReturnValue(1234);
 
     const resp = await request(app).post("/shipments").send({
       productId: 1000,
@@ -17,7 +17,7 @@ describe("POST /", function () {
       zip: "12345-6789",
     });
 
-    expect(resp.body).toEqual({ shipped: expect.any(Number) }); //TODO: Test for expected number (1234)
+    expect(resp.body).toEqual({ shipped: 1234 });
   });
 
   test("throws error if empty request body", async function () {

@@ -21,5 +21,5 @@ test("shipProduct", async function () {
     zip: "12345-6789",
   });
 
-  expect(shipId).toEqual(expect.any(Number)); //TODO: test for actual id 3000
+  expect(shipId).toEqual(3000);
 });
