@@ -18,7 +18,7 @@ const { shipProduct } = require("../shipItApi");
 
 router.post("/", async function (req, res, next) {
   const result = jsonschema.validate(
-    req?.body, shipOrderSchema, {required: true});
+    req.body, shipOrderSchema, {required: true});
   if (!result.valid) {
     const errs = result.errors.map(err => err.stack);
     throw new BadRequestError(errs);

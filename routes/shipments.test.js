@@ -33,7 +33,7 @@ describe("POST /", function () {
           "zip": 42
         });
     expect(resp.statusCode).toEqual(400);
-    expect(JSON.parse(resp.text)).toEqual({
+    expect((resp.body)).toEqual({
       "error": {
         "message": [
           "instance.name is not of a type(s) string",
